@@ -146,7 +146,7 @@ class SupportController extends AbstractController
             if (SecurityController::checkCaptcha()) {
                 $userId = UsersModel::getCurrentUser()->getId();
                 [$support_question, $support_is_public] = Utils::filterInput("support_question", "support_is_public");
-                SupportModel::getInstance()->createSupport($userId, $support_question, $support_is_public === NULL ? 0 : 1);
+                $thisSupport = SupportModel::getInstance()->createSupport($userId, $support_question, $support_is_public === NULL ? 0 : 1);
                 Flash::send(Alert::SUCCESS, "Support", "Votre demande est prise en compte !");
                 if ($config->getUseWebhookNewSupport()) {
                     DiscordWebhook::createWebhook($config->getWebhookNewSupport())
