@@ -70,6 +70,7 @@ class SupportController extends AbstractController
         SupportResponsesModel::getInstance()->addStaffResponse($support->getId(), $support_response_content, $userId);
         SupportModel::getInstance()->setSupportStatus($support->getId(), 1);
         Flash::send(Alert::SUCCESS, "Support", "Votre réponse est envoyé !");
+        //TODO : Gérer l'envoie de webhook et de mail lors de réponses staff
         Redirect::redirectPreviousRoute();
     }
 
