@@ -64,13 +64,47 @@ class SupportController extends AbstractController
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "support.show");
 
+        $config = SupportSettingsModel::getInstance()->getConfig();
+
+        if ($config === null){
+            Flash::send(Alert::ERROR, "Support", "Configuration non définie");
+            Redirect::redirectPreviousRoute();
+        }
+
         $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
         $userId = UsersModel::getCurrentUser()->getId();
         [$support_response_content] = Utils::filterInput("support_response_content");
-        SupportResponsesModel::getInstance()->addStaffResponse($support->getId(), $support_response_content, $userId);
+        $thisResponse = SupportResponsesModel::getInstance()->addStaffResponse($support->getId(), $support_response_content, $userId);
         SupportModel::getInstance()->setSupportStatus($support->getId(), 1);
         Flash::send(Alert::SUCCESS, "Support", "Votre réponse est envoyé !");
         //TODO : Gérer l'envoie de webhook et de mail lors de réponses staff
+        if ($config->getUseWebhookNewResponse()) {
+            DiscordWebhook::createWebhook($config->getWebhookNewResponse())
+                ->setImageUrl(null)
+                ->setTts(false)
+                ->setTitle($support->getQuestion())
+                ->setTitleLink($support->getUrl())
+                ->setDescription('Accès : ' . $support->getIsPublicFormatted())
+                ->setColor('35AFD9')
+                ->setFooterText(Website::getWebsiteName())
+                ->setFooterIconUrl(null)
+                ->setAuthorName($thisResponse->getUser()->getPseudo())
+                ->setAuthorUrl(null)
+                ->send();
+        }
+        if ($config->getUseMail()) {
+            if(MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable() && $config->getObjectMailResponse()){
+                if ($config->getSenderMail() && $config->getUseSenderMail()) {
+                    MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
+                        "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
+                } else {
+                    MailController::getInstance()->sendMail($thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
+                        "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
+                }
+            } else {
+                Flash::send(Alert::ERROR,"Support" ,"La configuration mail de ce site n'est pas bonne !");
+            }
+        }
         Redirect::redirectPreviousRoute();
     }
 
