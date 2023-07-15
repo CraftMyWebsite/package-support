@@ -4,6 +4,7 @@ namespace CMW\Entity\Support;
 
 use CMW\Controller\Core\CoreController;
 use CMW\Entity\Users\UserEntity;
+use CMW\Model\Support\SupportResponsesModel;
 
 class SupportResponseEntity
 {
@@ -54,6 +55,14 @@ class SupportResponseEntity
     public function getResponse(): string
     {
         return $this->support_response_content;
+    }
+
+    /**
+     * @return int
+     */
+    public function countResponse(): int
+    {
+        return SupportResponsesModel::getInstance()->countResponses($this->getSupport()->getId());
     }
 
     /**

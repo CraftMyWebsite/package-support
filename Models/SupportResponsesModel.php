@@ -68,6 +68,25 @@ class SupportResponsesModel extends AbstractModel
 
     }
 
+    /**
+     * @param int $supportId
+     * @return string
+     * @desc count number of response in question
+     */
+    public function countResponses(int $supportId): mixed
+    {
+        $sql = "SELECT COUNT(support_response_id) as count FROM cmw_support_response WHERE support_id = :supportId";
+        $db = DatabaseManager::getInstance();
+
+        $res = $db->prepare($sql);
+
+        if (!$res->execute(array("supportId" => $supportId))) {
+            return 0;
+        }
+
+        return $res->fetch(0)['count'];
+    }
+
     public function addResponse(int $support_id, string $support_response_content, int $user_id): ?SupportResponseEntity
     {
         $data = array(

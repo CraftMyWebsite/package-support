@@ -3,6 +3,7 @@
 /* @var CMW\Entity\Support\SupportEntity[] $supports */
 
 use CMW\Manager\Lang\LangManager;
+use CMW\Model\Support\SupportResponsesModel;
 
 $title = "Support";
 $description = "Support";
@@ -27,6 +28,7 @@ $description = "Support";
                     <th class="text-center">Confidentialité</th>
                     <th class="text-center">État</th>
                     <th class="text-center">Date</th>
+                    <th class="text-center">Réponses</th>
                     <th class="text-center">Consulter</th>
                 </tr>
                 </thead>
@@ -43,6 +45,7 @@ $description = "Support";
                         </td>
                         <td><?= $support->getStatusFormatted() ?></td>
                         <td><?= $support->getCreated() ?></td>
+                        <td><?= SupportResponsesModel::getInstance()->countResponses($support->getId()) ?></td>
                         <td class="text-center">
                             <a href="details/<?= $support->getSlug() ?>">
                                 <i class="text-primary me-3 fa fa-eye"></i>

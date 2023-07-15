@@ -104,6 +104,18 @@ $description = "Support";
                             <input class="form-check-input" type="checkbox" id="captcha" name="support_settings_captcha" <?= $config->getCaptcha() ? 'checked' : '' ?>>
                             <label class="form-check-label" for="captcha">Activer le captcha</label>
                         </div>
+                        <!--TODO : Gérer ceci :-->
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input" type="checkbox" id="captcha" name="support_settings_captcha" <?= $config->getCaptcha() ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="captcha">Definir la visiblité <i data-bs-toggle="tooltip" title="Les utilisateurs peuvent choisir si leur question est publique ou non" class="fa-sharp fa-solid fa-circle-question"></i></label>
+                        </div>
+                        <div>
+                            <h6>Visibilité par defaut :</h6>
+                            <select class="form-select" name="style" required>
+                                <option value="0" <?php //$style === $currentStyle ? "selected" : "" ?>>Privé</option>
+                                <option value="1" <?php //$style === $currentStyle ? "selected" : "" ?>>Publique</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
