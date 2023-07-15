@@ -67,7 +67,7 @@ class SupportController extends AbstractController
         $config = SupportSettingsModel::getInstance()->getConfig();
 
         if ($config === null){
-            Flash::send(Alert::ERROR, "Support", "Configuration non définie");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.confNotDefined"));
             Redirect::redirectPreviousRoute();
         }
 
@@ -76,7 +76,7 @@ class SupportController extends AbstractController
         [$support_response_content] = Utils::filterInput("support_response_content");
         $thisResponse = SupportResponsesModel::getInstance()->addStaffResponse($support->getId(), $support_response_content, $userId);
         SupportModel::getInstance()->setSupportStatus($support->getId(), 1);
-        Flash::send(Alert::SUCCESS, "Support", "Votre réponse est envoyé !");
+        Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.replySended"));
         //TODO : Gérer l'envoie de webhook et de mail lors de réponses staff
         if ($config->getUseWebhookNewResponse()) {
             DiscordWebhook::createWebhook($config->getWebhookNewResponse())
@@ -95,14 +95,14 @@ class SupportController extends AbstractController
         if ($config->getUseMail()) {
             if(MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable() && $config->getObjectMailResponse()){
                 if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                    MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
+                    MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse() ." #". $support->getId(),
                         "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
                 } else {
                     MailController::getInstance()->sendMail($thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
                         "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
                 }
             } else {
-                Flash::send(Alert::ERROR,"Support" ,"La configuration mail de ce site n'est pas bonne !");
+                Flash::send(Alert::ERROR,LangManager::translate("support.flash.title"),LangManager::translate("support.flash.badMailConf"));
             }
         }
         Redirect::redirectPreviousRoute();
@@ -136,7 +136,7 @@ class SupportController extends AbstractController
             ($support_settings_webhook_new_response === "" ? null : $support_settings_webhook_new_response),$support_settings_use_webhook_new_response === NULL ? 0 : 1,$support_settings_use_mail === NULL ? 0 : 1,($support_settings_admin_mail === "" ? null : $support_settings_admin_mail)
             ,($support_settings_custom_sender_mail === "" ? null : $support_settings_custom_sender_mail),$support_settings_use_sender_mail === NULL ? 0 : 1,($support_settings_object_mail_new === "" ? null : $support_settings_object_mail_new),($support_settings_object_mail_response === "" ? null : $support_settings_object_mail_response));
 
-        Flash::send(Alert::SUCCESS, LangManager::translate("core.toaster.success"), LangManager::translate("newsletter.flash.apply"));
+        Flash::send(Alert::SUCCESS, LangManager::translate("core.toaster.success"), LangManager::translate("support.flash.confApply"));
 
         Redirect::redirectPreviousRoute();
     }
@@ -146,7 +146,7 @@ class SupportController extends AbstractController
     {
         $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
         SupportModel::getInstance()->setSupportStatus($support->getId(), 0);
-        Flash::send(Alert::SUCCESS, "Support", "Cette demande est à nouveau ouverte");
+        Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.reOpened"));
         Redirect::redirectPreviousRoute();
     }
 
@@ -166,14 +166,14 @@ class SupportController extends AbstractController
     private function publicSupportPost(): void
     {
         if (!UsersController::isUserLogged()) {
-            Flash::send(Alert::ERROR, "Support", "Connectez-vous avant d'envoyer une demande'");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.connectBeforeNew"));
             Redirect::redirect('login');
         }
 
         $config = SupportSettingsModel::getInstance()->getConfig();
 
         if ($config === null){
-            Flash::send(Alert::ERROR, "Support", "Configuration non définie");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.confNotDefined"));
             Redirect::redirectPreviousRoute();
         }
 
@@ -182,7 +182,7 @@ class SupportController extends AbstractController
                 $userId = UsersModel::getCurrentUser()->getId();
                 [$support_question, $support_is_public] = Utils::filterInput("support_question", "support_is_public");
                 $thisSupport = SupportModel::getInstance()->createSupport($userId, $support_question, $support_is_public === NULL ? 0 : 1);
-                Flash::send(Alert::SUCCESS, "Support", "Votre demande est prise en compte !");
+                Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.requestAdded"));
                 if ($config->getUseWebhookNewSupport()) {
                     DiscordWebhook::createWebhook($config->getWebhookNewSupport())
                         ->setImageUrl(null)
@@ -200,26 +200,26 @@ class SupportController extends AbstractController
                 if ($config->getUseMail()) {
                     if(MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable() && $config->getObjectMailNews()){
                         if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                            MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisSupport->getUser()->getMail(),$config->getObjectMailNews(),
+                            MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisSupport->getUser()->getMail(),$config->getObjectMailNews() ." #". $thisSupport->getId(),
                                 "Votre demande <b>".$thisSupport->getQuestion(). "</b> est bien prise en compte<br>Vous pouvez la consulter <a href='". $thisSupport->getUrl() ."'>ici</a>.");
                         } else {
                             MailController::getInstance()->sendMail($thisSupport->getUser()->getMail(),$config->getObjectMailNews(),
                                 "Votre demande <b>".$thisSupport->getQuestion(). "</b> est bien prise en compte<br>Vous pouvez la consulter <a href='". $thisSupport->getUrl() ."'>ici</a>.");
                         }
                     } else {
-                        Flash::send(Alert::ERROR,"Support" ,"La configuration mail de ce site n'est pas bonne !");
+                        Flash::send(Alert::ERROR,LangManager::translate("support.flash.title"),LangManager::translate("support.flash.badMailConf"));
                     }
                 }
                 Redirect::redirectPreviousRoute();
             } else {
-                Flash::send(Alert::ERROR, "Support", "Veuillez compléter le captcha");
+                Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.captchaEmpty"));
                 Redirect::redirectPreviousRoute();
             }
         } else {
             $userId = UsersModel::getCurrentUser()->getId();
             [$support_question, $support_is_public] = Utils::filterInput("support_question", "support_is_public");
             $thisSupport = SupportModel::getInstance()->createSupport($userId, $support_question, $support_is_public === NULL ? 0 : 1);
-            Flash::send(Alert::SUCCESS, "Support", "Votre demande est prise en compte !");
+            Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.requestAdded"));
             if ($config->getUseWebhookNewSupport()) {
                 DiscordWebhook::createWebhook($config->getWebhookNewSupport())
                     ->setImageUrl(null)
@@ -237,14 +237,14 @@ class SupportController extends AbstractController
             if ($config->getUseMail()) {
                 if(MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable() && $config->getObjectMailNews()){
                     if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                        MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisSupport->getUser()->getMail(),$config->getObjectMailNews(),
+                        MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisSupport->getUser()->getMail(),$config->getObjectMailNews()." #". $thisSupport->getId(),
                         "Votre demande <b>".$thisSupport->getQuestion(). "</b> est bien prise en compte<br>Vous pouvez la consulter <a href='". $thisSupport->getUrl() ."'>ici</a>.");
                     } else {
                         MailController::getInstance()->sendMail($thisSupport->getUser()->getMail(),$config->getObjectMailNews(),
                             "Votre demande <b>".$thisSupport->getQuestion(). "</b> est bien prise en compte<br>Vous pouvez la consulter <a href='". $thisSupport->getUrl() ."'>ici</a>.");
                     }
                 } else {
-                    Flash::send(Alert::ERROR,"Support" ,"La configuration mail de ce site n'est pas bonne !");
+                    Flash::send(Alert::ERROR,LangManager::translate("support.flash.title") ,LangManager::translate("support.flash.badMailConf"));
                 }
             }
             Redirect::redirectPreviousRoute();
@@ -255,7 +255,7 @@ class SupportController extends AbstractController
     public function privateBaseView(): void
     {
         if (!UsersController::isUserLogged()) {
-            Flash::send(Alert::ERROR, "Support", "Connectez-vous avant de consulter vos demandes");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.connectBeforePrivate"));
             Redirect::redirect('login');
         }
 
@@ -274,11 +274,11 @@ class SupportController extends AbstractController
 
         if ($support->getIsPublic() === 0) {
             if (!UsersController::isUserLogged()) {
-                Flash::send(Alert::ERROR, "Support", "Connectez-vous avant de consulter cette demande");
+                Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.connectBeforePrivateThis"));
                 Redirect::redirect('login');
             } else {
                 if ($support->getUser()->getId() != UsersModel::getCurrentUser()->getId()) {
-                    Flash::send(Alert::ERROR, "Support", "Vous n'avez pas le droit de consulter cette demande");
+                    Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.notYourPrivate"));
                     Redirect::redirect('support');
                 } else {
                     $responses = SupportResponsesModel::getInstance()->getResponseBySupportId($support->getId());
@@ -303,24 +303,24 @@ class SupportController extends AbstractController
         $config = SupportSettingsModel::getInstance()->getConfig();
 
         if ($config === null){
-            Flash::send(Alert::ERROR, "Support", "Configuration non définie");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.confNotDefined"));
             Redirect::redirectPreviousRoute();
         }
 
         if (!UsersController::isUserLogged()) {
-            Flash::send(Alert::ERROR, "Support", "Connectez-vous avant de répondre");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.connectBeforeReply"));
             Redirect::redirect('login');
         } else {
             if ($config->getCaptcha()) {
                 if (SecurityController::checkCaptcha()) {
                     $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
                     if ($support->getStatus() === "2") {
-                        Flash::send(Alert::ERROR, "Support", "Ce sujet est clos, vous ne pouvez plus répondre");
+                        Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.subjectClosed"));
                     } else {
                         $userId = UsersModel::getCurrentUser()->getId();
                         [$support_response_content] = Utils::filterInput("support_response_content");
                         $thisResponse = SupportResponsesModel::getInstance()->addResponse($support->getId(), $support_response_content, $userId);
-                        Flash::send(Alert::SUCCESS, "Support", "Votre réponse est envoyé !");
+                        Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.replySend"));
                         if ($config->getUseWebhookNewResponse()) {
                             DiscordWebhook::createWebhook($config->getWebhookNewResponse())
                                 ->setImageUrl(null)
@@ -338,14 +338,14 @@ class SupportController extends AbstractController
                         if ($config->getUseMail()) {
                             if(MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable() && $config->getObjectMailResponse()){
                                 if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                                    MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
+                                    MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse()." #". $support->getId(),
                                         "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
                                 } else {
                                     MailController::getInstance()->sendMail($thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
                                         "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
                                 }
                             } else {
-                                Flash::send(Alert::ERROR,"Support" ,"La configuration mail de ce site n'est pas bonne !");
+                                Flash::send(Alert::ERROR,LangManager::translate("support.flash.title") ,LangManager::translate("support.flash.badMailConf"));
                             }
                         }
                         if ($support->getUser()->getId() === $userId) {
@@ -355,18 +355,18 @@ class SupportController extends AbstractController
                         }
                     }
                 } else {
-                    Flash::send(Alert::ERROR, "Support", "Veuillez compléter le captcha");
+                    Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.captchaEmpty"));
                 }
                 Redirect::redirectPreviousRoute();
             } else {
                 $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
                 if ($support->getStatus() === "2") {
-                    Flash::send(Alert::ERROR, "Support", "Ce sujet est clos, vous ne pouvez plus répondre");
+                    Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.subjectClosed"));
                 } else {
                     $userId = UsersModel::getCurrentUser()->getId();
                     [$support_response_content] = Utils::filterInput("support_response_content");
                     $thisResponse = SupportResponsesModel::getInstance()->addResponse($support->getId(), $support_response_content, $userId);
-                    Flash::send(Alert::SUCCESS, "Support", "Votre réponse est envoyé !");
+                    Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.replySend"));
                     if ($config->getUseWebhookNewResponse()) {
                         DiscordWebhook::createWebhook($config->getWebhookNewResponse())
                             ->setImageUrl(null)
@@ -384,14 +384,14 @@ class SupportController extends AbstractController
                     if ($config->getUseMail()) {
                         if(MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable() && $config->getObjectMailResponse()){
                             if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                                MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
+                                MailController::getInstance()->sendMailWithSender($config->getSenderMail(),Website::getWebsiteName(),$thisResponse->getUser()->getMail(),$config->getObjectMailResponse()." #". $support->getId(),
                                     "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
                             } else {
                                 MailController::getInstance()->sendMail($thisResponse->getUser()->getMail(),$config->getObjectMailResponse(),
                                     "Nouvelle réponse à la demande <b>".$support->getQuestion(). "</b><br>Vous pouvez la consulter <a href='". $support->getUrl() ."'>ici</a>.");
                             }
                         } else {
-                            Flash::send(Alert::ERROR,"Support" ,"La configuration mail de ce site n'est pas bonne !");
+                            Flash::send(Alert::ERROR,LangManager::translate("support.flash.title") ,LangManager::translate("support.flash.badMailConf"));
                         }
                     }
                     if ($support->getUser()->getId() === $userId) {
@@ -409,16 +409,16 @@ class SupportController extends AbstractController
     public function publicSupportClose(Request $request, string $supportSlug): void
     {
         if (!UsersController::isUserLogged()) {
-            Flash::send(Alert::ERROR, "Support", "Connectez-vous avant de cloturer cette demande");
+            Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.connectBeforeClose"));
             Redirect::redirect('login');
         } else {
             $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
             if ($support->getUser()->getId() != UsersModel::getCurrentUser()->getId()) {
-                Flash::send(Alert::ERROR, "Support", "Vous n'avez pas le droit de cloturer cette demande");
+                Flash::send(Alert::ERROR, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.cantClose"));
                 Redirect::redirectPreviousRoute();
             } else {
                 SupportModel::getInstance()->setSupportStatus($support->getId(), 2);
-                Flash::send(Alert::SUCCESS, "Support", "Cette demande est close");
+                Flash::send(Alert::SUCCESS, LangManager::translate("support.flash.title"), LangManager::translate("support.flash.isClose"));
                 Redirect::redirectPreviousRoute();
             }
         }

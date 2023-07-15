@@ -5,14 +5,14 @@
 use CMW\Manager\Lang\LangManager;
 use CMW\Model\Support\SupportResponsesModel;
 
-$title = "Support";
-$description = "Support";
+$title = LangManager::translate("support.title");
+$description = LangManager::translate("support.description");
 
 ?>
 
 <div class="d-flex flex-wrap justify-content-between">
     <h3><i class="fa-solid fa-ticket"></i> <span
-            class="m-lg-auto">Gestion des tickets</span></h3>
+            class="m-lg-auto"><?= LangManager::translate("support.manage.manageTicket") ?></span></h3>
 </div>
 
 <section>
@@ -23,13 +23,13 @@ $description = "Support";
             <table class="table" id="table1">
                 <thead>
                 <tr>
-                    <th class="text-center">Autheur</th>
-                    <th class="text-center">Question</th>
-                    <th class="text-center">Confidentialité</th>
-                    <th class="text-center">État</th>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Réponses</th>
-                    <th class="text-center">Consulter</th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.author") ?></th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.question") ?></th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.visibility") ?></th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.status") ?></th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.date") ?></th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.responses") ?></th>
+                    <th class="text-center"><?= LangManager::translate("support.manage.action") ?></th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
@@ -38,9 +38,9 @@ $description = "Support";
                         <td><?= $support->getUser()->getPseudo() ?></td>
                         <td><?= mb_strimwidth($support->getQuestion(), 0, 50, '...') ?></td>
                         <td><?php if ($support->getIsPublic() === 0):  ?>
-                                <i class="text-warning fa-regular fa-eye-slash"></i> Privé
+                                <i class="text-warning fa-regular fa-eye-slash"></i> <?= LangManager::translate("support.manage.private") ?>
                             <?php else: ?>
-                                <i class="text-success fa-regular fa-eye"></i> Publique
+                                <i class="text-success fa-regular fa-eye"></i> <?= LangManager::translate("support.manage.public") ?>
                             <?php endif; ?>
                         </td>
                         <td><?= $support->getStatusFormatted() ?></td>
@@ -58,17 +58,17 @@ $description = "Support";
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header bg-success">
-                                            <h5 class="modal-title white" id="myModalLabel160">Cloturer <?= mb_strimwidth($support->getQuestion(), 0, 30, '...') ?></h5>
+                                            <h5 class="modal-title white" id="myModalLabel160"><?= LangManager::translate("support.manage.close") ?> <?= mb_strimwidth($support->getQuestion(), 0, 30, '...') ?></h5>
                                         </div>
                                         <div class="modal-body text-left">
-                                            Vous avez bien travailler
+                                            <?= LangManager::translate("support.manage.goodWork") ?>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                                                 <span class=""><?= LangManager::translate("core.btn.close") ?></span>
                                             </button>
                                             <a href="<?= $support->getCloseUrl() ?>" class="btn btn-success">
-                                                <span class="">Cloturer</span>
+                                                <span class=""><?= LangManager::translate("support.manage.close") ?></span>
                                             </a>
                                         </div>
                                     </div>
@@ -82,17 +82,17 @@ $description = "Support";
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header bg-warning">
-                                            <h5 class="modal-title white" id="myModalLabel160">Ré ouvrir <?= mb_strimwidth($support->getQuestion(), 0, 30, '...') ?></h5>
+                                            <h5 class="modal-title white" id="myModalLabel160"><?= LangManager::translate("support.manage.reOpen") ?> <?= mb_strimwidth($support->getQuestion(), 0, 30, '...') ?></h5>
                                         </div>
                                         <div class="modal-body text-left">
-                                            Vous êtes sûr ?
+                                            <?= LangManager::translate("support.manage.sur") ?>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                                                 <span class=""><?= LangManager::translate("core.btn.close") ?></span>
                                             </button>
                                             <a href="<?= $support->getReOpenUrl() ?>" class="btn btn-warning">
-                                                <span class="">Ré ouvrir</span>
+                                                <span class=""><?= LangManager::translate("support.manage.reOpen") ?></span>
                                             </a>
                                         </div>
                                     </div>

@@ -4,6 +4,7 @@ namespace CMW\Entity\Support;
 
 use CMW\Controller\Core\CoreController;
 use CMW\Entity\Users\UserEntity;
+use CMW\Manager\Lang\LangManager;
 use CMW\Model\Support\SupportResponsesModel;
 
 class SupportResponseEntity
@@ -87,7 +88,7 @@ class SupportResponseEntity
     public function getIsStaffFormatted(): string
     {
         if ($this->support_response_is_staff === 0) {return "";}
-        if ($this->support_response_is_staff === 1) {return "Équipe support";}
+        if ($this->support_response_is_staff === 1) {return LangManager::translate("support.entity.staff");}
     }
 
     /**

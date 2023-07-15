@@ -5,6 +5,7 @@ namespace CMW\Entity\Support;
 use CMW\Controller\Core\CoreController;
 use CMW\Entity\Users\UserEntity;
 use CMW\Manager\Env\EnvManager;
+use CMW\Manager\Lang\LangManager;
 use CMW\Utils\Website;
 
 class SupportEntity
@@ -93,8 +94,8 @@ class SupportEntity
      */
     public function getIsPublicFormatted(): string
     {
-        if ($this->support_is_public === 0) {return "Privé";}
-        if ($this->support_is_public === 1) {return "Publique";}
+        if ($this->support_is_public === 0) {return LangManager::translate("support.entity.private");}
+        if ($this->support_is_public === 1) {return LangManager::translate("support.entity.public");}
     }
 
     /**
@@ -110,9 +111,9 @@ class SupportEntity
      */
     public function getStatusFormatted(): string
     {
-        if ($this->support_status === 0) {return "<i class='fa-solid fa-spinner fa-spin' style='color: #1159d4;'></i> Waiting for response";}
-        if ($this->support_status === 1) {return "<i class='fa-solid fa-spinner fa-spin-pulse' style='color: #1bbba9;'></i> Waiting for customer";}
-        if ($this->support_status === 2) {return "<i class='fa-regular fa-circle-check' style='color: #15d518;'></i> Closed";}
+        if ($this->support_status === 0) {return "<i class='fa-solid fa-spinner fa-spin' style='color: #1159d4;'></i>" .LangManager::translate("support.entity.waitingResponse");}
+        if ($this->support_status === 1) {return "<i class='fa-solid fa-spinner fa-spin-pulse' style='color: #1bbba9;'></i>".LangManager::translate("support.entity.waitingCustomer");}
+        if ($this->support_status === 2) {return "<i class='fa-regular fa-circle-check' style='color: #15d518;'></i>".LangManager::translate("support.entity.closed");}
     }
 
     /**
