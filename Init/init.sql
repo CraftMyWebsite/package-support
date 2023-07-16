@@ -45,10 +45,9 @@ CREATE TABLE IF NOT EXISTS cmw_support_settings
     support_settings_use_sender_mail   INT NOT NULL DEFAULT 0,
     support_settings_object_mail_new    VARCHAR(255) NULL,
     support_settings_object_mail_response    VARCHAR(255) NULL,
+    support_settings_status_defined_by_customer   INT NOT NULL DEFAULT 0,
+    support_settings_default_status   INT NOT NULL DEFAULT 0,
     support_settings_updated TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
-
-INSERT INTO `cmw_support_settings` (support_settings_captcha,support_settings_use_webhook_new_support,support_settings_use_webhook_new_response,support_settings_use_mail,support_settings_use_sender_mail)
-VALUES ('0','0','0','0','0');

@@ -172,7 +172,8 @@ class SupportModel extends AbstractModel
 
     private function setSupportSlug(int $id, string $support_question): void
     {
-        $slug = $this->generateSupportSlug($id, $support_question);
+        $shortUrl = mb_strimwidth($support_question, 0, 30);
+        $slug = $this->generateSupportSlug($id, $shortUrl);
 
         $data = array(
             "support_slug" => $slug,
@@ -189,7 +190,7 @@ class SupportModel extends AbstractModel
 
     public function generateSupportSlug(int $id, string $support_question): string
     {
-        return Utils::normalizeForSlug($support_question) . "-$id";
+        return Utils::normalizeForSlug("$id-".$support_question);
     }
 
     public function setSupportStatus(int $supportId, int $status): void

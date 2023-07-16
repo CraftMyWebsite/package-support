@@ -104,19 +104,17 @@ $description = LangManager::translate("support.description");
                             <input class="form-check-input" type="checkbox" id="support_settings_captcha" name="support_settings_captcha" <?= $config->getCaptcha() ? 'checked' : '' ?>>
                             <label class="form-check-label" for="support_settings_captcha"><?= LangManager::translate("support.settings.captcha") ?></label>
                         </div>
-                        <!--TODO : Gérer ceci :
+
                         <div class="form-check form-switch mt-2">
-                            <input class="form-check-input" type="checkbox" id="captcha" name="support_settings_captcha" <?= $config->getCaptcha() ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="captcha"><?= LangManager::translate("support.settings.visibility") ?>
+                            <input class="form-check-input" type="checkbox" id="support_settings_status_defined_by_customer" name="support_settings_status_defined_by_customer" <?= $config->visibilityIsDefinedByCustomer() ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="support_settings_status_defined_by_customer"><?= LangManager::translate("support.settings.visibility") ?>
                                 <i data-bs-toggle="tooltip" title="<?= LangManager::translate("support.settings.visibilityTooltip") ?>" class="fa-sharp fa-solid fa-circle-question"></i></label>
                         </div>
-                        <div>
-                            <h6><?= LangManager::translate("support.settings.defaultVisibility") ?></h6>
-                            <select class="form-select" name="style" required>
-                                <option value="0" <?php //$style === $currentStyle ? "selected" : "" ?>><?= LangManager::translate("support.settings.private") ?></option>
-                                <option value="1" <?php //$style === $currentStyle ? "selected" : "" ?>><?= LangManager::translate("support.settings.public") ?></option>
-                            </select>
-                        </div>-->
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input" type="checkbox" id="support_settings_default_status" name="support_settings_default_status" <?= $config->getDefaultVisibility() ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="support_settings_default_status">Publique par défaut
+                                <i data-bs-toggle="tooltip" title="Si l'option ''<?= LangManager::translate("support.settings.visibility") ?>'' est active vous pouvez choisir si les demandes sont publique ou privé" class="fa-sharp fa-solid fa-circle-question"></i></label>
+                        </div>
                     </div>
                 </div>
             </div>
