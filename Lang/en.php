@@ -53,9 +53,9 @@ return [
         "captcha" => "Enable captcha",
         "visibility" => "Set visibility",
         "visibilityTooltip" => "Users can choose whether their question is public or not",
-        "defaultVisibility" => "Default Visibility:",
-        "private" => "Private",
-        "public" => "Public",
+        "defaultVisibility" => "Public by default",
+        "ifOption" => "If option",
+        "isActive" => "is active you can choose whether requests are public or private",
     ],
     "entity" => [
         "private" => "Private",

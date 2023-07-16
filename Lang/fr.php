@@ -53,9 +53,9 @@ return [
         "captcha" => "Activer le captcha",
         "visibility" => "Definir la visiblité",
         "visibilityTooltip" => "Les utilisateurs peuvent choisir si leur question est publique ou non",
-        "defaultVisibility" => "Visibilité par defaut :",
-        "private" => "Privé",
-        "public" => "Publique",
+        "defaultVisibility" => "Publique par défaut",
+        "ifOption" => "Si l'option",
+        "isActive" => "est active vous pouvez choisir si les demandes sont publique ou privé",
     ],
     "entity" => [
         "private" => "Privé",

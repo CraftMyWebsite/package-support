@@ -112,8 +112,8 @@ $description = LangManager::translate("support.description");
                         </div>
                         <div class="form-check form-switch mt-2">
                             <input class="form-check-input" type="checkbox" id="support_settings_default_status" name="support_settings_default_status" <?= $config->getDefaultVisibility() ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="support_settings_default_status">Publique par défaut
-                                <i data-bs-toggle="tooltip" title="Si l'option ''<?= LangManager::translate("support.settings.visibility") ?>'' est active vous pouvez choisir si les demandes sont publique ou privé" class="fa-sharp fa-solid fa-circle-question"></i></label>
+                            <label class="form-check-label" for="support_settings_default_status"><?= LangManager::translate("support.settings.defaultVisibility") ?>
+                                <i data-bs-toggle="tooltip" title="<?= LangManager::translate("support.settings.ifOption") ?> ''<?= LangManager::translate("support.settings.visibility") ?>'' <?= LangManager::translate("support.settings.isActive") ?>" class="fa-sharp fa-solid fa-circle-question"></i></label>
                         </div>
                     </div>
                 </div>
