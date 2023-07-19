@@ -100,10 +100,6 @@ $description = LangManager::translate("support.description");
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="support_settings_captcha" name="support_settings_captcha" <?= $config->getCaptcha() ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="support_settings_captcha"><?= LangManager::translate("support.settings.captcha") ?></label>
-                        </div>
 
                         <div class="form-check form-switch mt-2">
                             <input class="form-check-input" type="checkbox" id="support_settings_status_defined_by_customer" name="support_settings_status_defined_by_customer" <?= $config->visibilityIsDefinedByCustomer() ? 'checked' : '' ?>>

@@ -31,7 +31,6 @@ class SupportSettingsModel extends AbstractModel
         $res = $res->fetch();
 
         return new SupportSettingEntity(
-            $res['support_settings_captcha'],
             $res['support_settings_webhook_new_support'] ?? null,
             $res['support_settings_use_webhook_new_support'],
             $res['support_settings_webhook_new_response'] ?? null,
@@ -48,14 +47,13 @@ class SupportSettingsModel extends AbstractModel
         );
     }
 
-    public function updateConfig(int $support_settings_captcha,?string $support_settings_webhook_new_support,int $support_settings_use_webhook_new_support,
+    public function updateConfig(?string $support_settings_webhook_new_support,int $support_settings_use_webhook_new_support,
                                  ?string $support_settings_webhook_new_response,int $support_settings_use_webhook_new_response,int $support_settings_use_mail,
                                  ?string $support_settings_admin_mail,?string $support_settings_custom_sender_mail,?int $support_settings_use_sender_mail,
                                  ?string $support_settings_object_mail_new,?string $support_settings_object_mail_response,int $support_settings_status_defined_by_customer,
                                  int $support_settings_default_status): ?SupportSettingEntity
     {
         $info = array(
-            "support_settings_captcha" => $support_settings_captcha,
             "support_settings_webhook_new_support" => $support_settings_webhook_new_support,
             "support_settings_use_webhook_new_support" => $support_settings_use_webhook_new_support,
             "support_settings_webhook_new_response" => $support_settings_webhook_new_response,
@@ -70,7 +68,7 @@ class SupportSettingsModel extends AbstractModel
             "support_settings_default_status" => $support_settings_default_status
         );
 
-        $sql = "UPDATE cmw_support_settings SET support_settings_captcha = :support_settings_captcha, support_settings_webhook_new_support = :support_settings_webhook_new_support,
+        $sql = "UPDATE cmw_support_settings SET support_settings_webhook_new_support = :support_settings_webhook_new_support,
                                 support_settings_use_webhook_new_support = :support_settings_use_webhook_new_support, support_settings_webhook_new_response= :support_settings_webhook_new_response,
                                 support_settings_use_webhook_new_response= :support_settings_use_webhook_new_response, support_settings_use_mail= :support_settings_use_mail,
                                 support_settings_admin_mail= :support_settings_admin_mail,

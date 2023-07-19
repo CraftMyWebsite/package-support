@@ -7,7 +7,6 @@ use CMW\Entity\Users\UserEntity;
 
 class SupportSettingEntity
 {
-    private bool $support_settings_captcha;
     private ?string $support_settings_webhook_new_support;
     private bool $support_settings_use_webhook_new_support;
     private ?string $support_settings_webhook_new_response;
@@ -23,7 +22,6 @@ class SupportSettingEntity
     private string $support_settings_updated;
 
     /**
-     * @param bool $support_settings_captcha
      * @param ?string $support_settings_webhook_new_support
      * @param bool $support_settings_use_webhook_new_support
      * @param ?string $support_settings_webhook_new_response
@@ -38,13 +36,12 @@ class SupportSettingEntity
      * @param bool $support_settings_default_status
      * @param string $support_settings_updated
      */
-    public function __construct(bool $support_settings_captcha,?string $support_settings_webhook_new_support,bool $support_settings_use_webhook_new_support,
+    public function __construct(?string $support_settings_webhook_new_support,bool $support_settings_use_webhook_new_support,
                                 ?string $support_settings_webhook_new_response,bool $support_settings_use_webhook_new_response,bool $support_settings_use_mail,
                                 ?string $support_settings_admin_mail,?string $support_settings_custom_sender_mail,bool $support_settings_use_sender_mail,
                                 ?string $support_settings_object_mail_new,?string $support_settings_object_mail_response,
                                 bool $support_settings_status_defined_by_customer,bool $support_settings_default_status,string $support_settings_updated)
     {
-        $this->support_settings_captcha = $support_settings_captcha;
         $this->support_settings_webhook_new_support = $support_settings_webhook_new_support;
         $this->support_settings_use_webhook_new_support = $support_settings_use_webhook_new_support;
         $this->support_settings_webhook_new_response = $support_settings_webhook_new_response;
@@ -58,14 +55,6 @@ class SupportSettingEntity
         $this->support_settings_status_defined_by_customer = $support_settings_status_defined_by_customer;
         $this->support_settings_default_status = $support_settings_default_status;
         $this->support_settings_updated = $support_settings_updated;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getCaptcha(): bool
-    {
-        return $this->support_settings_captcha;
     }
 
     /**

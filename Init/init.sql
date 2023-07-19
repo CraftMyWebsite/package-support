@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS `cmw_support_response`
 
 CREATE TABLE IF NOT EXISTS cmw_support_settings
 (
-    support_settings_captcha   INT NOT NULL DEFAULT 0,
     support_settings_webhook_new_support    VARCHAR(255) NULL,
     support_settings_use_webhook_new_support   INT NOT NULL DEFAULT 0,
     support_settings_webhook_new_response    VARCHAR(255) NULL,
