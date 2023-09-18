@@ -50,3 +50,5 @@ CREATE TABLE IF NOT EXISTS cmw_support_settings
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
+INSERT INTO `cmw_support_settings` (`support_settings_webhook_new_support`, `support_settings_use_webhook_new_support`, `support_settings_webhook_new_response`, `support_settings_use_webhook_new_response`, `support_settings_use_mail`, `support_settings_admin_mail`, `support_settings_custom_sender_mail`, `support_settings_use_sender_mail`, `support_settings_object_mail_new`, `support_settings_object_mail_response`, `support_settings_status_defined_by_customer`, `support_settings_default_status`, `support_settings_updated`) VALUES (NULL, '0', NULL, '0', '0', NULL, NULL, '0', NULL, NULL, '0', '0', current_timestamp());
