@@ -1,6 +1,6 @@
 <?php
 
-namespace CMW\Implementation\Support;
+namespace CMW\Implementation\Support\Core;
 
 use CMW\Interface\Core\IMenus;
 
