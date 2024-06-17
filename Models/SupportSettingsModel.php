@@ -7,7 +7,6 @@ use CMW\Manager\Database\DatabaseManager;
 use CMW\Manager\Package\AbstractModel;
 
 
-
 /**
  * Class @SupportSettingsModel
  * @package Support
@@ -47,13 +46,22 @@ class SupportSettingsModel extends AbstractModel
         );
     }
 
-    public function updateConfig(?string $support_settings_webhook_new_support,int $support_settings_use_webhook_new_support,
-                                 ?string $support_settings_webhook_new_response,int $support_settings_use_webhook_new_response,int $support_settings_use_mail,
-                                 ?string $support_settings_admin_mail,?string $support_settings_custom_sender_mail,?int $support_settings_use_sender_mail,
-                                 ?string $support_settings_object_mail_new,?string $support_settings_object_mail_response,int $support_settings_status_defined_by_customer,
-                                 int $support_settings_default_status): ?SupportSettingEntity
+    public function updateConfig(
+        ?string $support_settings_webhook_new_support,
+        int     $support_settings_use_webhook_new_support,
+        ?string $support_settings_webhook_new_response,
+        int     $support_settings_use_webhook_new_response,
+        int     $support_settings_use_mail,
+        ?string $support_settings_admin_mail,
+        ?string $support_settings_custom_sender_mail,
+        ?int    $support_settings_use_sender_mail,
+        ?string $support_settings_object_mail_new,
+        ?string $support_settings_object_mail_response,
+        int     $support_settings_status_defined_by_customer,
+        int     $support_settings_default_status,
+    ): ?SupportSettingEntity
     {
-        $info = array(
+        $info = [
             "support_settings_webhook_new_support" => $support_settings_webhook_new_support,
             "support_settings_use_webhook_new_support" => $support_settings_use_webhook_new_support,
             "support_settings_webhook_new_response" => $support_settings_webhook_new_response,
@@ -65,8 +73,8 @@ class SupportSettingsModel extends AbstractModel
             "support_settings_object_mail_new" => $support_settings_object_mail_new,
             "support_settings_object_mail_response" => $support_settings_object_mail_response,
             "support_settings_status_defined_by_customer" => $support_settings_status_defined_by_customer,
-            "support_settings_default_status" => $support_settings_default_status
-        );
+            "support_settings_default_status" => $support_settings_default_status,
+        ];
 
         $sql = "UPDATE cmw_support_settings SET support_settings_webhook_new_support = :support_settings_webhook_new_support,
                                 support_settings_use_webhook_new_support = :support_settings_use_webhook_new_support, support_settings_webhook_new_response= :support_settings_webhook_new_response,
@@ -78,6 +86,7 @@ class SupportSettingsModel extends AbstractModel
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
+
         if ($req->execute($info)) {
             return $this->getConfig();
         }

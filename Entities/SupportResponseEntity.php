@@ -87,8 +87,11 @@ class SupportResponseEntity
      */
     public function getIsStaffFormatted(): string
     {
-        if ($this->support_response_is_staff === 0) {return "";}
-        if ($this->support_response_is_staff === 1) {return LangManager::translate("support.entity.staff");}
+        if ($this->support_response_is_staff === 1) {
+            return LangManager::translate("support.entity.staff");
+        }
+
+        return "";
     }
 
     /**

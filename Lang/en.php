@@ -83,7 +83,17 @@ return [
         "replySend" => "Your reply has been sent!",
         "connectBeforeClose" => "Connect before closing this request",
         "cantClose" => "You do not have the permission to close this request",
-        "isClose" => "This request is closed"
+        "isClose" => "This request is closed",
+        "unableToAddStaffResponse" => "Unable to send your response.",
+        "unableToOpenSupport" => "Impossible d'envoyer votre demande.",
     ],
-
+    "webhook" => [
+        "access" => "Access : %access%",
+    ],
+    "permissions" => [
+        "support" => [
+            "show" => "Show supports",
+            "settings" => "Manage support settings",
+        ],
+    ],
 ];

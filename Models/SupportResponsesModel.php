@@ -16,7 +16,7 @@ use CMW\Model\Users\UsersModel;
  */
 class SupportResponsesModel extends AbstractModel
 {
-    public function getResponseById(int $support_response_id): ? SupportResponseEntity
+    public function getResponseById(int $support_response_id): ?SupportResponseEntity
     {
         $sql = "SELECT * FROM cmw_support_response WHERE support_response_id = :support_response_id";
 
@@ -24,7 +24,7 @@ class SupportResponsesModel extends AbstractModel
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(array("support_response_id" => $support_response_id))) {
+        if (!$res->execute(["support_response_id" => $support_response_id])) {
             return null;
         }
 
@@ -54,11 +54,11 @@ class SupportResponsesModel extends AbstractModel
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(array("support_id" => $supportId))) {
-            return array();
+        if (!$res->execute(["support_id" => $supportId])) {
+            return [];
         }
 
-        $toReturn = array();
+        $toReturn = [];
 
         while ($support = $res->fetch()) {
             $toReturn[] = $this->getResponseById($support["support_response_id"]);
@@ -75,12 +75,12 @@ class SupportResponsesModel extends AbstractModel
      */
     public function countResponses(int $supportId): mixed
     {
-        $sql = "SELECT COUNT(support_response_id) as count FROM cmw_support_response WHERE support_id = :supportId";
+        $sql = "SELECT COUNT(support_response_id) AS count FROM cmw_support_response WHERE support_id = :supportId";
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(array("supportId" => $supportId))) {
+        if (!$res->execute(["supportId" => $supportId])) {
             return 0;
         }
 
@@ -89,39 +89,43 @@ class SupportResponsesModel extends AbstractModel
 
     public function addResponse(int $support_id, string $support_response_content, int $user_id): ?SupportResponseEntity
     {
-        $data = array(
+        $data = [
             "support_id" => $support_id,
             "support_response_content" => $support_response_content,
-            "user_id" => $user_id
-        );
+            "user_id" => $user_id,
+        ];
 
         $sql = "INSERT INTO cmw_support_response(support_id, support_response_content, user_id) VALUES (:support_id, :support_response_content, :user_id)";
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
 
-        if ($req->execute($data)) {
-            $id = $db->lastInsertId();
-            return $this->getResponseById($id);
+        if (!$req->execute($data)) {
+            return null;
         }
+
+        $id = $db->lastInsertId();
+        return $this->getResponseById($id);
     }
 
     public function addStaffResponse(int $support_id, string $support_response_content, int $user_id): ?SupportResponseEntity
     {
-        $data = array(
+        $data = [
             "support_id" => $support_id,
             "support_response_content" => $support_response_content,
-            "user_id" => $user_id
-        );
+            "user_id" => $user_id,
+        ];
 
         $sql = "INSERT INTO cmw_support_response(support_id, support_response_content, user_id, support_response_is_staff) VALUES (:support_id, :support_response_content, :user_id, 1)";
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
 
-        if ($req->execute($data)) {
-            $id = $db->lastInsertId();
-            return $this->getResponseById($id);
+        if (!$req->execute($data)) {
+            return null;
         }
+
+        $id = $db->lastInsertId();
+        return $this->getResponseById($id);
     }
 }

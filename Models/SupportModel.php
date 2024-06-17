@@ -3,7 +3,6 @@
 namespace CMW\Model\Support;
 
 
-use CMW\Entity\Newsletter\NewsletterEntity;
 use CMW\Entity\Support\SupportEntity;
 use CMW\Manager\Database\DatabaseManager;
 use CMW\Manager\Package\AbstractModel;
@@ -19,7 +18,7 @@ use CMW\Utils\Utils;
  */
 class SupportModel extends AbstractModel
 {
-    public function getSupportById(int $support_id): ? SupportEntity
+    public function getSupportById(int $support_id): ?SupportEntity
     {
         $sql = "SELECT * FROM cmw_support WHERE support_id = :support_id";
 
@@ -27,7 +26,7 @@ class SupportModel extends AbstractModel
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(array("support_id" => $support_id))) {
+        if (!$res->execute(["support_id" => $support_id])) {
             return null;
         }
 
@@ -59,10 +58,10 @@ class SupportModel extends AbstractModel
         $res = $db->prepare($sql);
 
         if (!$res->execute()) {
-            return array();
+            return [];
         }
 
-        $toReturn = array();
+        $toReturn = [];
 
         while ($support = $res->fetch()) {
             $toReturn[] = $this->getSupportById($support["support_id"]);
@@ -75,7 +74,7 @@ class SupportModel extends AbstractModel
     /**
      * @return \CMW\Entity\Support\SupportEntity
      */
-    public function getSupportBySlug(string $slug): ? SupportEntity
+    public function getSupportBySlug(string $slug): ?SupportEntity
     {
 
         $sql = "SELECT support_id FROM cmw_support WHERE support_slug = :support_slug";
@@ -83,7 +82,7 @@ class SupportModel extends AbstractModel
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(array("support_slug" => $slug))) {
+        if (!$res->execute(["support_slug" => $slug])) {
             return null;
         }
 
@@ -109,10 +108,10 @@ class SupportModel extends AbstractModel
         $res = $db->prepare($sql);
 
         if (!$res->execute()) {
-            return array();
+            return [];
         }
 
-        $toReturn = array();
+        $toReturn = [];
 
         while ($support = $res->fetch()) {
             $toReturn[] = $this->getSupportById($support["support_id"]);
@@ -133,11 +132,11 @@ class SupportModel extends AbstractModel
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(array("userId" => $userId))) {
-            return array();
+        if (!$res->execute(["userId" => $userId])) {
+            return [];
         }
 
-        $toReturn = array();
+        $toReturn = [];
 
         while ($support = $res->fetch()) {
             $toReturn[] = $this->getSupportById($support["support_id"]);
@@ -150,13 +149,13 @@ class SupportModel extends AbstractModel
     public function createSupport(int $user_id, string $support_question, int $support_is_public): ?SupportEntity
     {
 
-        $data = array(
+        $data = [
             "user_id" => $user_id,
             "support_question" => $support_question,
             "support_is_public" => $support_is_public,
             "support_slug" => "NOT_DEFINED",
-            "support_status" => "0"
-        );
+            "support_status" => "0",
+        ];
 
         $sql = "INSERT INTO cmw_support(user_id, support_question, support_is_public, support_slug, support_status) VALUES (:user_id, :support_question, :support_is_public, :support_slug, :support_status)";
 
@@ -175,10 +174,10 @@ class SupportModel extends AbstractModel
         $shortUrl = mb_strimwidth($support_question, 0, 30);
         $slug = $this->generateSupportSlug($id, $shortUrl);
 
-        $data = array(
+        $data = [
             "support_slug" => $slug,
             "support_id" => $id,
-        );
+        ];
 
         $sql = "UPDATE cmw_support SET support_slug = :support_slug WHERE support_id = :support_id";
 
@@ -190,15 +189,15 @@ class SupportModel extends AbstractModel
 
     public function generateSupportSlug(int $id, string $support_question): string
     {
-        return Utils::normalizeForSlug("$id-".$support_question);
+        return Utils::normalizeForSlug("$id-" . $support_question);
     }
 
     public function setSupportStatus(int $supportId, int $status): void
     {
-        $data = array(
+        $data = [
             "support_id" => $supportId,
             "support_status" => $status,
-        );
+        ];
 
         $sql = "UPDATE cmw_support SET support_status = :support_status WHERE support_id = :support_id";
 

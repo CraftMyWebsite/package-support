@@ -78,7 +78,7 @@ class SupportEntity
      */
     public function getUrl(): string
     {
-        return Website::getProtocol() . "://" . $_SERVER["SERVER_NAME"] . EnvManager::getInstance()->getValue("PATH_SUBFOLDER") ."support/view/$this->support_slug";
+        return Website::getProtocol() . "://" . $_SERVER["SERVER_NAME"] . EnvManager::getInstance()->getValue("PATH_SUBFOLDER") . "support/view/$this->support_slug";
     }
 
     /**
@@ -94,12 +94,15 @@ class SupportEntity
      */
     public function getIsPublicFormatted(): string
     {
-        if ($this->support_is_public === 0) {return LangManager::translate("support.entity.private");}
-        if ($this->support_is_public === 1) {return LangManager::translate("support.entity.public");}
+        if ($this->support_is_public === 1) {
+            return LangManager::translate("support.entity.public");
+        }
+
+        return LangManager::translate("support.entity.private");
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getStatus(): string
     {
@@ -111,9 +114,14 @@ class SupportEntity
      */
     public function getStatusFormatted(): string
     {
-        if ($this->support_status === 0) {return "<i class='fa-solid fa-spinner fa-spin' style='color: #1159d4;'></i>" .LangManager::translate("support.entity.waitingResponse");}
-        if ($this->support_status === 1) {return "<i class='fa-solid fa-spinner fa-spin-pulse' style='color: #1bbba9;'></i>".LangManager::translate("support.entity.waitingCustomer");}
-        if ($this->support_status === 2) {return "<i class='fa-regular fa-circle-check' style='color: #15d518;'></i>".LangManager::translate("support.entity.closed");}
+        if ($this->support_status === 0) {
+            return "<i class='fa-solid fa-spinner fa-spin' style='color: #1159d4;'></i>" . LangManager::translate("support.entity.waitingResponse");
+        }
+        if ($this->support_status === 1) {
+            return "<i class='fa-solid fa-spinner fa-spin-pulse' style='color: #1bbba9;'></i>" . LangManager::translate("support.entity.waitingCustomer");
+        }
+
+        return "<i class='fa-regular fa-circle-check' style='color: #15d518;'></i>" . LangManager::translate("support.entity.closed");
     }
 
     /**
@@ -129,7 +137,7 @@ class SupportEntity
      */
     public function getCloseUrl(): string
     {
-        return Website::getProtocol() . "://" . $_SERVER["SERVER_NAME"] . EnvManager::getInstance()->getValue("PATH_SUBFOLDER") ."support/close/$this->support_slug";
+        return Website::getProtocol() . "://" . $_SERVER["SERVER_NAME"] . EnvManager::getInstance()->getValue("PATH_SUBFOLDER") . "support/close/$this->support_slug";
     }
 
     /**
@@ -137,7 +145,7 @@ class SupportEntity
      */
     public function getReOpenUrl(): string
     {
-        return Website::getProtocol() . "://" . $_SERVER["SERVER_NAME"] . EnvManager::getInstance()->getValue("PATH_SUBFOLDER") ."support/open/$this->support_slug";
+        return Website::getProtocol() . "://" . $_SERVER["SERVER_NAME"] . EnvManager::getInstance()->getValue("PATH_SUBFOLDER") . "support/open/$this->support_slug";
     }
 
     /**
@@ -147,5 +155,4 @@ class SupportEntity
     {
         return CoreController::formatDate($this->support_updated);
     }
-
 }

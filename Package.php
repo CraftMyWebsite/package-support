@@ -15,7 +15,7 @@ class Package implements IPackageConfig
 
     public function version(): string
     {
-        return "0.0.3";
+        return "0.0.1";
     }
 
     public function authors(): array
@@ -45,12 +45,12 @@ class Package implements IPackageConfig
                 subMenus: [
                     new PackageSubMenuType(
                         title: 'Gestion',
-                        permission: 'support.todo', //TODO PERMS
+                        permission: 'support.show',
                         url: 'support/manage',
                     ),
                     new PackageSubMenuType(
                         title: 'Paramètres',
-                        permission: 'support.todo', //TODO PERMS
+                        permission: 'support.settings',
                         url: 'support/settings',
                     ),
                 ]
@@ -64,12 +64,12 @@ class Package implements IPackageConfig
                 subMenus: [
                     new PackageSubMenuType(
                         title: 'Manage',
-                        permission: 'support.todo', //TODO PERMS
+                        permission: 'support.show',
                         url: 'support/manage',
                     ),
                     new PackageSubMenuType(
                         title: 'Settings',
-                        permission: 'support.todo', //TODO PERMS
+                        permission: 'support.settings',
                         url: 'support/settings',
                     ),
                 ]

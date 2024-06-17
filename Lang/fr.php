@@ -83,7 +83,17 @@ return [
         "replySend" => "Votre réponse est envoyé !",
         "connectBeforeClose" => "Connectez-vous avant de cloturer cette demande",
         "cantClose" => "Vous n'avez pas le droit de cloturer cette demande",
-        "isClose" => "Cette demande est close"
+        "isClose" => "Cette demande est close",
+        "unableToAddStaffResponse" => "Impossible d'envoyer votre réponse.",
+        "unableToOpenSupport" => "Impossible d'envoyer votre demande.",
     ],
-
+    "webhook" => [
+        "access" => "Accès : %access%",
+    ],
+    "permissions" => [
+        "support" => [
+            "show" => "Afficher les supports",
+            "settings" => "Gérer les paramètres support",
+        ],
+    ],
 ];
