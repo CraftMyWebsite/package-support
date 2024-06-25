@@ -11,109 +11,76 @@ $description = LangManager::translate("support.description");
 
 ?>
 
-
-<div class="d-flex flex-wrap justify-content-between">
-    <h3><i class="fa-solid fa-gears"></i> <span class="m-lg-auto"><?= LangManager::translate("support.settings.title") ?></span></h3>
-    <div class="buttons">
-        <button form="supportSettings" type="submit"
-                class="btn btn-primary"><?= LangManager::translate("core.btn.save") ?></button>
-    </div>
+<div class="page-title">
+    <h3><i class="fa-solid fa-gears"></i> <?= LangManager::translate("support.settings.title") ?></h3>
+    <button form="supportSettings" type="submit"
+            class="btn btn-primary"><?= LangManager::translate("core.btn.save") ?></button>
 </div>
-
 
 <form id="supportSettings" action="" method="post">
     <?php (new SecurityManager())->insertHiddenToken() ?>
-    <section class="row">
-
-        <div class="col-12 col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="support_settings_use_mail" name="support_settings_use_mail" <?= $config->getUseMail() ? 'checked' : '' ?>>
-                        <label class="form-check-label" for="support_settings_use_mail"><h6><?= LangManager::translate("support.settings.mail") ?></h6></label>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div>
-                        <h6><?= LangManager::translate("support.settings.adminMail") ?></h6>
-                        <div class="form-group">
-                            <input class="form-control" type="email" name="support_settings_admin_mail" placeholder="my@mail.com" value="<?= $config->getAdminMail() ?>">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="support_settings_use_sender_mail" name="support_settings_use_sender_mail" <?= $config->getUseSenderMail() ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="support_settings_use_sender_mail"><h6><?= LangManager::translate("support.settings.senderMail") ?></h6></label>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="email" name="support_settings_custom_sender_mail" placeholder="noreply@mail.com"
-                                   value="<?= $config->getSenderMail() ?>">
-                        </div>
-                    </div>
-                    <div>
-                        <h6><?= LangManager::translate("support.settings.objectNew") ?></h6>
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="support_settings_object_mail_new"
-                                   placeholder="<?= LangManager::translate("support.settings.pholderRequest") ?>" value="<?= $config->getObjectMailNews() ?>">
-                        </div>
-                    </div>
-                    <div>
-                        <h6><?= LangManager::translate("support.settings.objectResponses") ?></h6>
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="support_settings_object_mail_response"
-                                   placeholder="<?= LangManager::translate("support.settings.pholderResponses") ?>" value="<?= $config->getObjectMailResponse() ?>">
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="grid-3">
+    <div class="card">
+        <div>
+            <label class="toggle">
+                <h6 class="toggle-label"><?= LangManager::translate("support.settings.mail") ?></h6>
+                <input type="checkbox" class="toggle-input" id="support_settings_use_mail" name="support_settings_use_mail" <?= $config->getUseMail() ? 'checked' : '' ?>>
+                <div class="toggle-slider"></div>
+            </label>
         </div>
-
-        <div class="col-12 col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h6>Discord</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="support_settings_use_webhook_new_support" name="support_settings_use_webhook_new_support" <?= $config->getUseWebhookNewSupport() ? 'checked' : '' ?>>
-                        <label class="form-check-label" for="support_settings_use_webhook_new_support"><h6>Discord Webhook - <?= LangManager::translate("support.settings.newRequest") ?> :</h6></label>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="url" name="support_settings_webhook_new_support" placeholder="https://discord.com/api/webhooks/" value="<?= $config->getWebhookNewSupport() ?>">
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="support_settings_use_webhook_new_response" name="support_settings_use_webhook_new_response" <?= $config->getUseWebhookNewResponse() ? 'checked' : '' ?>>
-                        <label class="form-check-label" for="support_settings_use_webhook_new_response"><h6>Discord Webhook - <?= LangManager::translate("support.settings.newResponses") ?> :</h6></label>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="url" name="support_settings_webhook_new_response" placeholder="https://discord.com/api/webhooks/" value="<?= $config->getWebhookNewResponse() ?>">
-                    </div>
-                </div>
-            </div>
+        <label for="support_settings_admin_mail"><?= LangManager::translate("support.settings.adminMail") ?></label>
+        <input type="email" id="support_settings_admin_mail" class="input" name="support_settings_admin_mail" placeholder="my@mail.com" value="<?= $config->getAdminMail() ?>">
+        <div>
+            <label class="toggle">
+                <p class="toggle-label"><?= LangManager::translate("support.settings.senderMail") ?></p>
+                <input type="checkbox" class="toggle-input" id="support_settings_use_sender_mail" name="support_settings_use_sender_mail" <?= $config->getUseSenderMail() ? 'checked' : '' ?>>
+                <div class="toggle-slider"></div>
+            </label>
         </div>
-
-        <div class="col-12 col-lg-4">
-            <div class="card ">
-                <div class="card-header">
-                    <h6><?= LangManager::translate("support.settings.global") ?></h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-
-                        <div class="form-check form-switch mt-2">
-                            <input class="form-check-input" type="checkbox" id="support_settings_status_defined_by_customer" name="support_settings_status_defined_by_customer" <?= $config->visibilityIsDefinedByCustomer() ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="support_settings_status_defined_by_customer"><?= LangManager::translate("support.settings.visibility") ?>
-                                <i data-bs-toggle="tooltip" title="<?= LangManager::translate("support.settings.visibilityTooltip") ?>" class="fa-sharp fa-solid fa-circle-question"></i></label>
-                        </div>
-                        <div class="form-check form-switch mt-2">
-                            <input class="form-check-input" type="checkbox" id="support_settings_default_status" name="support_settings_default_status" <?= $config->getDefaultVisibility() ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="support_settings_default_status"><?= LangManager::translate("support.settings.defaultVisibility") ?>
-                                <i data-bs-toggle="tooltip" title="<?= LangManager::translate("support.settings.ifOption") ?> ''<?= LangManager::translate("support.settings.visibility") ?>'' <?= LangManager::translate("support.settings.isActive") ?>" class="fa-sharp fa-solid fa-circle-question"></i></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <input type="email" id="default-input" class="input" name="support_settings_custom_sender_mail" placeholder="noreply@mail.com"
+               value="<?= $config->getSenderMail() ?>">
+        <label for="support_settings_object_mail_new"><?= LangManager::translate("support.settings.objectNew") ?></label>
+        <input type="text" id="support_settings_object_mail_new" class="input" name="support_settings_object_mail_new"
+               placeholder="<?= LangManager::translate("support.settings.pholderRequest") ?>" value="<?= $config->getObjectMailNews() ?>">
+        <label for="support_settings_object_mail_response"><?= LangManager::translate("support.settings.objectResponses") ?></label>
+        <input type="text" id="default-input" class="input" name="support_settings_object_mail_response"
+               placeholder="<?= LangManager::translate("support.settings.pholderResponses") ?>" value="<?= $config->getObjectMailResponse() ?>">
+    </div>
+    <div class="card">
+        <h6>Discord</h6>
+        <div>
+            <label class="toggle">
+                <p class="toggle-label">Discord Webhook - <?= LangManager::translate("support.settings.newRequest") ?> :</p>
+                <input type="checkbox" class="toggle-input" id="support_settings_use_webhook_new_support" name="support_settings_use_webhook_new_support" <?= $config->getUseWebhookNewSupport() ? 'checked' : '' ?>>
+                <div class="toggle-slider"></div>
+            </label>
+            <input type="url" id="support_settings_webhook_new_support" class="input" name="support_settings_webhook_new_support" placeholder="https://discord.com/api/webhooks/" value="<?= $config->getWebhookNewSupport() ?>">
         </div>
-    </section>
+        <div>
+            <label class="toggle">
+                <p class="toggle-label">Discord Webhook - <?= LangManager::translate("support.settings.newResponses") ?> :</p>
+                <input type="checkbox" class="toggle-input" id="support_settings_use_webhook_new_response" name="support_settings_use_webhook_new_response" <?= $config->getUseWebhookNewResponse() ? 'checked' : '' ?>>
+                <div class="toggle-slider"></div>
+            </label>
+            <input type="text" id="support_settings_webhook_new_response" class="input" name="support_settings_webhook_new_response" placeholder="https://discord.com/api/webhooks/" value="<?= $config->getWebhookNewResponse() ?>">
+        </div>
+    </div>
+    <div class="card">
+        <h6><?= LangManager::translate("support.settings.global") ?></h6>
+        <div>
+            <label class="toggle">
+                <p class="toggle-label"><?= LangManager::translate("support.settings.visibility") ?> <i data-bs-toggle="tooltip" title="<?= LangManager::translate("support.settings.visibilityTooltip") ?>" class="fa-sharp fa-solid fa-circle-question"></i></p>
+                <input type="checkbox" class="toggle-input" id="support_settings_status_defined_by_customer" name="support_settings_status_defined_by_customer" <?= $config->visibilityIsDefinedByCustomer() ? 'checked' : '' ?>>
+                <div class="toggle-slider"></div>
+            </label>
+        </div>
+        <div>
+            <label class="toggle">
+                <p class="toggle-label"><?= LangManager::translate("support.settings.defaultVisibility") ?> <i data-bs-toggle="tooltip" title="<?= LangManager::translate("support.settings.ifOption") ?> ''<?= LangManager::translate("support.settings.visibility") ?>'' <?= LangManager::translate("support.settings.isActive") ?>" class="fa-sharp fa-solid fa-circle-question"></i></p>
+                <input type="checkbox" class="toggle-input" id="support_settings_default_status" name="support_settings_default_status" <?= $config->getDefaultVisibility() ? 'checked' : '' ?>>
+                <div class="toggle-slider"></div>
+            </label>
+        </div>
+    </div>
+</div>
 </form>

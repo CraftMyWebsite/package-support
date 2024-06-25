@@ -92,8 +92,8 @@ return [
     ],
     "permissions" => [
         "support" => [
-            "show" => "Show supports",
-            "settings" => "Manage support settings",
+            "show" => "Show and answer",
+            "settings" => "Manage settings",
         ],
     ],
 ];
