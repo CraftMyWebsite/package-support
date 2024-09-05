@@ -8,7 +8,7 @@ use CMW\Manager\Flash\Alert;
 use CMW\Manager\Flash\Flash;
 use CMW\Manager\Lang\LangManager;
 use CMW\Manager\Package\AbstractController;
-use CMW\Manager\Requests\Request;
+
 use CMW\Manager\Router\Link;
 use CMW\Manager\Views\View;
 use CMW\Manager\Webhook\DiscordWebhook;
@@ -48,7 +48,7 @@ class SupportController extends AbstractController
     }
 
     #[Link("/details/:supportSlug", Link::GET, [], "/cmw-admin/support")]
-    private function supportDetails(Request $request, string $supportSlug): void
+    private function supportDetails(string $supportSlug): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "support.show");
 
@@ -66,7 +66,7 @@ class SupportController extends AbstractController
     }
 
     #[NoReturn] #[Link("/details/:supportSlug", Link::POST, [], "/cmw-admin/support")]
-    private function supportDetailsPostResponse(Request $request, string $supportSlug): void
+    private function supportDetailsPostResponse(string $supportSlug): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "support.show");
 
@@ -199,7 +199,7 @@ class SupportController extends AbstractController
     }
 
     #[NoReturn] #[Link("/open/:supportSlug", Link::GET, [], "/support")]
-    private function publicSupportOpen(Request $request, string $supportSlug): void
+    private function publicSupportOpen(string $supportSlug): void
     {
         $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
 
@@ -365,7 +365,7 @@ class SupportController extends AbstractController
     }
 
     #[Link("/view/:supportSlug", Link::GET, [], "/support")]
-    private function publicSupportView(Request $request, string $supportSlug): void
+    private function publicSupportView(string $supportSlug): void
     {
         $support = SupportModel::getInstance()->getSupportBySlug($supportSlug);
 
@@ -407,7 +407,7 @@ class SupportController extends AbstractController
     }
 
     #[NoReturn] #[Link("/view/:supportSlug", Link::POST, [], "/support")]
-    private function publicResponsePost(Request $request, string $supportSlug): void
+    private function publicResponsePost(string $supportSlug): void
     {
         $config = SupportSettingsModel::getInstance()->getConfig();
 
@@ -515,7 +515,7 @@ class SupportController extends AbstractController
     }
 
     #[NoReturn] #[Link("/close/:supportSlug", Link::GET, [], "/support")]
-    private function publicSupportClose(Request $request, string $supportSlug): void
+    private function publicSupportClose(string $supportSlug): void
     {
         if (!UsersController::isUserLogged()) {
             Flash::send(
