@@ -37,20 +37,19 @@ class SupportSettingEntity
      */
     public function __construct(
         ?string $support_settings_webhook_new_support,
-        bool    $support_settings_use_webhook_new_support,
+        bool $support_settings_use_webhook_new_support,
         ?string $support_settings_webhook_new_response,
-        bool    $support_settings_use_webhook_new_response,
-        bool    $support_settings_use_mail,
+        bool $support_settings_use_webhook_new_response,
+        bool $support_settings_use_mail,
         ?string $support_settings_admin_mail,
         ?string $support_settings_custom_sender_mail,
-        bool    $support_settings_use_sender_mail,
+        bool $support_settings_use_sender_mail,
         ?string $support_settings_object_mail_new,
         ?string $support_settings_object_mail_response,
-        bool    $support_settings_status_defined_by_customer,
-        bool    $support_settings_default_status,
-        string  $support_settings_updated,
-    )
-    {
+        bool $support_settings_status_defined_by_customer,
+        bool $support_settings_default_status,
+        string $support_settings_updated,
+    ) {
         $this->support_settings_webhook_new_support = $support_settings_webhook_new_support;
         $this->support_settings_use_webhook_new_support = $support_settings_use_webhook_new_support;
         $this->support_settings_webhook_new_response = $support_settings_webhook_new_response;
@@ -169,5 +168,4 @@ class SupportSettingEntity
     {
         return CoreController::formatDate($this->support_settings_updated);
     }
-
 }

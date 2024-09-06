@@ -2,13 +2,11 @@
 
 namespace CMW\Model\Support;
 
-
 use CMW\Entity\Support\SupportEntity;
 use CMW\Manager\Database\DatabaseManager;
 use CMW\Manager\Package\AbstractModel;
 use CMW\Model\Users\UsersModel;
 use CMW\Utils\Utils;
-
 
 /**
  * Class @SupportModel
@@ -20,29 +18,29 @@ class SupportModel extends AbstractModel
 {
     public function getSupportById(int $support_id): ?SupportEntity
     {
-        $sql = "SELECT * FROM cmw_support WHERE support_id = :support_id";
+        $sql = 'SELECT * FROM cmw_support WHERE support_id = :support_id';
 
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(["support_id" => $support_id])) {
+        if (!$res->execute(['support_id' => $support_id])) {
             return null;
         }
 
         $res = $res->fetch();
 
-        $user = (new UsersModel())->getUserById($res["user_id"]);
+        $user = (new UsersModel())->getUserById($res['user_id']);
 
         return new SupportEntity(
-            $res["support_id"],
-            $res["support_question"],
+            $res['support_id'],
+            $res['support_question'],
             $user,
-            $res["support_slug"],
-            $res["support_is_public"],
-            $res["support_status"],
-            $res["support_created"],
-            $res["support_updated"]
+            $res['support_slug'],
+            $res['support_is_public'],
+            $res['support_status'],
+            $res['support_created'],
+            $res['support_updated']
         );
     }
 
@@ -51,8 +49,7 @@ class SupportModel extends AbstractModel
      */
     public function getSupport(): array
     {
-
-        $sql = "SELECT support_id FROM cmw_support";
+        $sql = 'SELECT support_id FROM cmw_support';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
@@ -64,11 +61,10 @@ class SupportModel extends AbstractModel
         $toReturn = [];
 
         while ($support = $res->fetch()) {
-            $toReturn[] = $this->getSupportById($support["support_id"]);
+            $toReturn[] = $this->getSupportById($support['support_id']);
         }
 
         return $toReturn;
-
     }
 
     /**
@@ -76,13 +72,12 @@ class SupportModel extends AbstractModel
      */
     public function getSupportBySlug(string $slug): ?SupportEntity
     {
-
-        $sql = "SELECT support_id FROM cmw_support WHERE support_slug = :support_slug";
+        $sql = 'SELECT support_id FROM cmw_support WHERE support_slug = :support_slug';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(["support_slug" => $slug])) {
+        if (!$res->execute(['support_slug' => $slug])) {
             return null;
         }
 
@@ -92,8 +87,7 @@ class SupportModel extends AbstractModel
             return null;
         }
 
-        return $this->getSupportById($res["support_id"]);
-
+        return $this->getSupportById($res['support_id']);
     }
 
     /**
@@ -101,8 +95,7 @@ class SupportModel extends AbstractModel
      */
     public function getPublicSupport(): array
     {
-
-        $sql = "SELECT support_id FROM cmw_support WHERE support_is_public = 1";
+        $sql = 'SELECT support_id FROM cmw_support WHERE support_is_public = 1';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
@@ -114,11 +107,10 @@ class SupportModel extends AbstractModel
         $toReturn = [];
 
         while ($support = $res->fetch()) {
-            $toReturn[] = $this->getSupportById($support["support_id"]);
+            $toReturn[] = $this->getSupportById($support['support_id']);
         }
 
         return $toReturn;
-
     }
 
     /**
@@ -126,38 +118,35 @@ class SupportModel extends AbstractModel
      */
     public function getPivateSupport(int $userId): array
     {
-
-        $sql = "SELECT support_id FROM cmw_support WHERE user_id = :userId";
+        $sql = 'SELECT support_id FROM cmw_support WHERE user_id = :userId';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(["userId" => $userId])) {
+        if (!$res->execute(['userId' => $userId])) {
             return [];
         }
 
         $toReturn = [];
 
         while ($support = $res->fetch()) {
-            $toReturn[] = $this->getSupportById($support["support_id"]);
+            $toReturn[] = $this->getSupportById($support['support_id']);
         }
 
         return $toReturn;
-
     }
 
     public function createSupport(int $user_id, string $support_question, int $support_is_public): ?SupportEntity
     {
-
         $data = [
-            "user_id" => $user_id,
-            "support_question" => $support_question,
-            "support_is_public" => $support_is_public,
-            "support_slug" => "NOT_DEFINED",
-            "support_status" => "0",
+            'user_id' => $user_id,
+            'support_question' => $support_question,
+            'support_is_public' => $support_is_public,
+            'support_slug' => 'NOT_DEFINED',
+            'support_status' => '0',
         ];
 
-        $sql = "INSERT INTO cmw_support(user_id, support_question, support_is_public, support_slug, support_status) VALUES (:user_id, :support_question, :support_is_public, :support_slug, :support_status)";
+        $sql = 'INSERT INTO cmw_support(user_id, support_question, support_is_public, support_slug, support_status) VALUES (:user_id, :support_question, :support_is_public, :support_slug, :support_status)';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
@@ -175,11 +164,11 @@ class SupportModel extends AbstractModel
         $slug = $this->generateSupportSlug($id, $shortUrl);
 
         $data = [
-            "support_slug" => $slug,
-            "support_id" => $id,
+            'support_slug' => $slug,
+            'support_id' => $id,
         ];
 
-        $sql = "UPDATE cmw_support SET support_slug = :support_slug WHERE support_id = :support_id";
+        $sql = 'UPDATE cmw_support SET support_slug = :support_slug WHERE support_id = :support_id';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
@@ -195,16 +184,15 @@ class SupportModel extends AbstractModel
     public function setSupportStatus(int $supportId, int $status): void
     {
         $data = [
-            "support_id" => $supportId,
-            "support_status" => $status,
+            'support_id' => $supportId,
+            'support_status' => $status,
         ];
 
-        $sql = "UPDATE cmw_support SET support_status = :support_status WHERE support_id = :support_id";
+        $sql = 'UPDATE cmw_support SET support_status = :support_status WHERE support_id = :support_id';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
 
         $req->execute($data);
     }
-
 }

@@ -19,8 +19,6 @@ class Permissions implements IPermissionInit
                 code: 'support.settings',
                 description: LangManager::translate('support.permissions.support.settings'),
             ),
-
         ];
     }
-
 }

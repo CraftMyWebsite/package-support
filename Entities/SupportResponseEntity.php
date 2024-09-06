@@ -88,10 +88,10 @@ class SupportResponseEntity
     public function getIsStaffFormatted(): string
     {
         if ($this->support_response_is_staff === 1) {
-            return LangManager::translate("support.entity.staff");
+            return LangManager::translate('support.entity.staff');
         }
 
-        return "";
+        return '';
     }
 
     /**
@@ -101,5 +101,4 @@ class SupportResponseEntity
     {
         return CoreController::formatDate($this->support_response_created);
     }
-
 }

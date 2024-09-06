@@ -7,7 +7,6 @@ use CMW\Manager\Database\DatabaseManager;
 use CMW\Manager\Package\AbstractModel;
 use CMW\Model\Users\UsersModel;
 
-
 /**
  * Class @SupportResponsesModel
  * @package Support
@@ -18,28 +17,28 @@ class SupportResponsesModel extends AbstractModel
 {
     public function getResponseById(int $support_response_id): ?SupportResponseEntity
     {
-        $sql = "SELECT * FROM cmw_support_response WHERE support_response_id = :support_response_id";
+        $sql = 'SELECT * FROM cmw_support_response WHERE support_response_id = :support_response_id';
 
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(["support_response_id" => $support_response_id])) {
+        if (!$res->execute(['support_response_id' => $support_response_id])) {
             return null;
         }
 
         $res = $res->fetch();
 
-        $user = (new UsersModel())->getUserById($res["user_id"]);
-        $support = (new SupportModel())->getSupportById($res["support_id"]);
+        $user = (new UsersModel())->getUserById($res['user_id']);
+        $support = (new SupportModel())->getSupportById($res['support_id']);
 
         return new SupportResponseEntity(
-            $res["support_response_id"],
+            $res['support_response_id'],
             $support,
-            $res["support_response_content"],
+            $res['support_response_content'],
             $user,
-            $res["support_response_is_staff"],
-            $res["support_response_created"]
+            $res['support_response_is_staff'],
+            $res['support_response_created']
         );
     }
 
@@ -48,24 +47,22 @@ class SupportResponsesModel extends AbstractModel
      */
     public function getResponseBySupportId(int $supportId): array
     {
-
-        $sql = "SELECT support_response_id FROM cmw_support_response WHERE support_id = :support_id";
+        $sql = 'SELECT support_response_id FROM cmw_support_response WHERE support_id = :support_id';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(["support_id" => $supportId])) {
+        if (!$res->execute(['support_id' => $supportId])) {
             return [];
         }
 
         $toReturn = [];
 
         while ($support = $res->fetch()) {
-            $toReturn[] = $this->getResponseById($support["support_response_id"]);
+            $toReturn[] = $this->getResponseById($support['support_response_id']);
         }
 
         return $toReturn;
-
     }
 
     /**
@@ -75,12 +72,12 @@ class SupportResponsesModel extends AbstractModel
      */
     public function countResponses(int $supportId): mixed
     {
-        $sql = "SELECT COUNT(support_response_id) AS count FROM cmw_support_response WHERE support_id = :supportId";
+        $sql = 'SELECT COUNT(support_response_id) AS count FROM cmw_support_response WHERE support_id = :supportId';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
 
-        if (!$res->execute(["supportId" => $supportId])) {
+        if (!$res->execute(['supportId' => $supportId])) {
             return 0;
         }
 
@@ -90,12 +87,12 @@ class SupportResponsesModel extends AbstractModel
     public function addResponse(int $support_id, string $support_response_content, int $user_id): ?SupportResponseEntity
     {
         $data = [
-            "support_id" => $support_id,
-            "support_response_content" => $support_response_content,
-            "user_id" => $user_id,
+            'support_id' => $support_id,
+            'support_response_content' => $support_response_content,
+            'user_id' => $user_id,
         ];
 
-        $sql = "INSERT INTO cmw_support_response(support_id, support_response_content, user_id) VALUES (:support_id, :support_response_content, :user_id)";
+        $sql = 'INSERT INTO cmw_support_response(support_id, support_response_content, user_id) VALUES (:support_id, :support_response_content, :user_id)';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
@@ -111,12 +108,12 @@ class SupportResponsesModel extends AbstractModel
     public function addStaffResponse(int $support_id, string $support_response_content, int $user_id): ?SupportResponseEntity
     {
         $data = [
-            "support_id" => $support_id,
-            "support_response_content" => $support_response_content,
-            "user_id" => $user_id,
+            'support_id' => $support_id,
+            'support_response_content' => $support_response_content,
+            'user_id' => $user_id,
         ];
 
-        $sql = "INSERT INTO cmw_support_response(support_id, support_response_content, user_id, support_response_is_staff) VALUES (:support_id, :support_response_content, :user_id, 1)";
+        $sql = 'INSERT INTO cmw_support_response(support_id, support_response_content, user_id, support_response_is_staff) VALUES (:support_id, :support_response_content, :user_id, 1)';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
