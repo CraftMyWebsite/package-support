@@ -37,7 +37,6 @@ class Package implements IPackageConfig
     {
         return [
             new PackageMenuType(
-                lang: 'fr',
                 icon: 'fas fa-ticket',
                 title: 'Support',
                 url: null,
@@ -50,25 +49,6 @@ class Package implements IPackageConfig
                     ),
                     new PackageSubMenuType(
                         title: 'Paramètres',
-                        permission: 'support.settings',
-                        url: 'support/settings',
-                    ),
-                ]
-            ),
-            new PackageMenuType(
-                lang: 'en',
-                icon: 'fas fa-ticket',
-                title: 'Support',
-                url: null,
-                permission: null,
-                subMenus: [
-                    new PackageSubMenuType(
-                        title: 'Manage',
-                        permission: 'support.show',
-                        url: 'support/manage',
-                    ),
-                    new PackageSubMenuType(
-                        title: 'Settings',
                         permission: 'support.settings',
                         url: 'support/settings',
                     ),
