@@ -10,7 +10,7 @@ use CMW\Manager\Lang\LangManager;
 use CMW\Manager\Package\AbstractController;
 use CMW\Manager\Router\Link;
 use CMW\Manager\Views\View;
-use CMW\Manager\Webhook\DiscordWebhook;
+use CMW\Manager\Webhook\Discord\DiscordWebhook;
 use CMW\Model\Core\MailModel;
 use CMW\Model\Support\SupportModel;
 use CMW\Model\Support\SupportResponsesModel;
