@@ -2,7 +2,7 @@
 
 namespace CMW\Entity\Support;
 
-use CMW\Controller\Core\CoreController;
+use CMW\Utils\Date;
 use CMW\Entity\Users\UserEntity;
 use CMW\Manager\Lang\LangManager;
 use CMW\Model\Support\SupportResponsesModel;
@@ -99,6 +99,6 @@ class SupportResponseEntity
      */
     public function getCreated(): string
     {
-        return CoreController::formatDate($this->support_response_created);
+        return Date::formatDate($this->support_response_created);
     }
 }

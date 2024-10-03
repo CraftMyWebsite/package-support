@@ -2,7 +2,7 @@
 
 namespace CMW\Entity\Support;
 
-use CMW\Controller\Core\CoreController;
+use CMW\Utils\Date;
 use CMW\Entity\Users\UserEntity;
 use CMW\Manager\Env\EnvManager;
 use CMW\Manager\Lang\LangManager;
@@ -129,7 +129,7 @@ class SupportEntity
      */
     public function getCreated(): string
     {
-        return CoreController::formatDate($this->support_created);
+        return Date::formatDate($this->support_created);
     }
 
     /**
@@ -153,6 +153,6 @@ class SupportEntity
      */
     public function getUpdated(): string
     {
-        return CoreController::formatDate($this->support_updated);
+        return Date::formatDate($this->support_updated);
     }
 }

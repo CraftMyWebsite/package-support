@@ -2,7 +2,7 @@
 
 namespace CMW\Entity\Support;
 
-use CMW\Controller\Core\CoreController;
+use CMW\Utils\Date;
 
 class SupportSettingEntity
 {
@@ -166,6 +166,6 @@ class SupportSettingEntity
      */
     public function getUpdated(): string
     {
-        return CoreController::formatDate($this->support_settings_updated);
+        return Date::formatDate($this->support_settings_updated);
     }
 }
