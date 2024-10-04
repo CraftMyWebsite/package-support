@@ -2,6 +2,7 @@
 
 namespace CMW\Package\Support;
 
+use CMW\Manager\Lang\LangManager;
 use CMW\Manager\Package\IPackageConfig;
 use CMW\Manager\Package\PackageMenuType;
 use CMW\Manager\Package\PackageSubMenuType;
@@ -43,12 +44,12 @@ class Package implements IPackageConfig
                 permission: null,
                 subMenus: [
                     new PackageSubMenuType(
-                        title: 'Gestion',
+                        title: LangManager::translate('support.menu.manage'),
                         permission: 'support.show',
                         url: 'support/manage',
                     ),
                     new PackageSubMenuType(
-                        title: 'Paramètres',
+                        title: LangManager::translate('support.menu.settings'),
                         permission: 'support.settings',
                         url: 'support/settings',
                     ),

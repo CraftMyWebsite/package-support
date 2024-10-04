@@ -96,4 +96,8 @@ return [
             'settings' => 'Gérer les paramètres',
         ],
     ],
+    'menu' => [
+        'manage' => 'Gestion',
+        'settings' => 'Paramètres',
+    ],
 ];

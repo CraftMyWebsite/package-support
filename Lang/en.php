@@ -96,4 +96,8 @@ return [
             'settings' => 'Manage settings',
         ],
     ],
+    'menu' => [
+        'manage' => 'Manage',
+        'settings' => 'Settings',
+    ],
 ];
