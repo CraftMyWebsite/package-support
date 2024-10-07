@@ -539,22 +539,19 @@ class SupportController extends AbstractController
                 Redirect::errorPage(404);
             }
 
-            if ($support->getUser()->getId() !== UsersModel::getCurrentUser()?->getId()) {
-                Flash::send(
-                    Alert::ERROR,
-                    LangManager::translate('support.flash.title'),
-                    LangManager::translate('support.flash.cantClose'),
-                );
-                Redirect::redirectPreviousRoute();
-            } else {
+            if (UsersController::isAdminLogged() || $support->getUser()->getId() === UsersModel::getCurrentUser()?->getId()) {
                 SupportModel::getInstance()->setSupportStatus($support->getId(), 2);
                 Flash::send(
                     Alert::SUCCESS,
                     LangManager::translate('support.flash.title'),
-                    LangManager::translate('support.flash.isClose'),
-                );
-                Redirect::redirectPreviousRoute();
+                    LangManager::translate('support.flash.isClose'));
+            } else {
+                Flash::send(
+                    Alert::ERROR,
+                    LangManager::translate('support.flash.title'),
+                    LangManager::translate('support.flash.cantClose'));
             }
+            Redirect::redirectPreviousRoute();
         }
     }
 }
