@@ -227,10 +227,10 @@ class SupportController extends AbstractController
         $config = SupportSettingsModel::getInstance()->getConfig();
         $publicSupport = SupportModel::getInstance()->getPublicSupport();
 
-        $view = new View('Support', 'main');
-        $view->addVariableList(['publicSupport' => $publicSupport, 'config' => $config]);
-        $view->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css');
-        $view->view();
+        View::createPublicView('Support', 'main')
+            ->addVariableList(['publicSupport' => $publicSupport, 'config' => $config])
+            ->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css')
+            ->view();
     }
 
     #[NoReturn]
@@ -362,10 +362,10 @@ class SupportController extends AbstractController
 
         $privateSupport = SupportModel::getInstance()->getPivateSupport($user->getId());
 
-        $view = new View('Support', 'private');
-        $view->addVariableList(['privateSupport' => $privateSupport]);
-        $view->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css');
-        $view->view();
+        View::createPublicView('Support', 'private')
+            ->addVariableList(['privateSupport' => $privateSupport])
+            ->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css')
+            ->view();
     }
 
     #[Link('/view/:supportSlug', Link::GET, [], '/support')]
@@ -395,18 +395,18 @@ class SupportController extends AbstractController
                     Redirect::redirect('support');
                 } else {
                     $responses = SupportResponsesModel::getInstance()->getResponseBySupportId($support->getId());
-                    $view = new View('Support', 'details');
-                    $view->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css');
-                    $view->addVariableList(['support' => $support, 'responses' => $responses]);
-                    $view->view();
+                    View::createPublicView('Support', 'details')
+                        ->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css')
+                        ->addVariableList(['support' => $support, 'responses' => $responses])
+                        ->view();
                 }
             }
         } else {
             $responses = SupportResponsesModel::getInstance()->getResponseBySupportId($support->getId());
-            $view = new View('Support', 'details');
-            $view->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css');
-            $view->addVariableList(['support' => $support, 'responses' => $responses]);
-            $view->view();
+            View::createPublicView('Support', 'details')
+                ->addStyle('Admin/Resources/Vendors/Fontawesome-free/Css/fa-all.min.css')
+                ->addVariableList(['support' => $support, 'responses' => $responses])
+                ->view();
         }
     }
 
