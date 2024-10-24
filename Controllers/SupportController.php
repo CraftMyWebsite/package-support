@@ -7,6 +7,7 @@ use CMW\Controller\Users\UsersController;
 use CMW\Manager\Flash\Alert;
 use CMW\Manager\Flash\Flash;
 use CMW\Manager\Lang\LangManager;
+use CMW\Manager\Mail\MailManager;
 use CMW\Manager\Package\AbstractController;
 use CMW\Manager\Router\Link;
 use CMW\Manager\Views\View;
@@ -140,7 +141,7 @@ class SupportController extends AbstractController
         if ($config->getUseMail()) {
             if ($config->getObjectMailResponse() && MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable()) {
                 if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                    MailController::getInstance()->sendMailWithSender(
+                    MailManager::getInstance()->sendMailWithSender(
                         $config->getSenderMail(),
                         Website::getWebsiteName(),
                         $thisResponse->getUser()->getMail(),
@@ -148,7 +149,7 @@ class SupportController extends AbstractController
                         'Nouvelle réponse à la demande <b>' . $support->getQuestion() . "</b><br>Vous pouvez la consulter <a href='" . $support->getUrl() . "'>ici</a>."
                     );
                 } else {
-                    MailController::getInstance()->sendMail(
+                    MailManager::getInstance()->sendMail(
                         $thisResponse->getUser()->getMail(),
                         $config->getObjectMailResponse(),
                         'Nouvelle réponse à la demande <b>' . $support->getQuestion() . "</b><br>Vous pouvez la consulter <a href='" . $support->getUrl() . "'>ici</a>."
@@ -317,7 +318,7 @@ class SupportController extends AbstractController
         if ($config->getUseMail()) {
             if ($config->getObjectMailNews() && MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable()) {
                 if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                    MailController::getInstance()->sendMailWithSender(
+                    MailManager::getInstance()->sendMailWithSender(
                         $config->getSenderMail(),
                         Website::getWebsiteName(),
                         $thisSupport->getUser()->getMail(),
@@ -325,7 +326,7 @@ class SupportController extends AbstractController
                         'Votre demande <b>' . $thisSupport->getQuestion() . "</b> est bien prise en compte<br>Vous pouvez la consulter <a href='" . $thisSupport->getUrl() . "'>ici</a>."
                     );
                 } else {
-                    MailController::getInstance()->sendMail(
+                    MailManager::getInstance()->sendMail(
                         $thisSupport->getUser()->getMail(),
                         $config->getObjectMailNews(),
                         'Votre demande <b>' . $thisSupport->getQuestion() . "</b> est bien prise en compte<br>Vous pouvez la consulter <a href='" . $thisSupport->getUrl() . "'>ici</a>."
@@ -493,7 +494,7 @@ class SupportController extends AbstractController
                 if ($config->getUseMail()) {
                     if ($config->getObjectMailResponse() && MailModel::getInstance()->getConfig() !== null && MailModel::getInstance()->getConfig()->isEnable()) {
                         if ($config->getSenderMail() && $config->getUseSenderMail()) {
-                            MailController::getInstance()->sendMailWithSender(
+                            MailManager::getInstance()->sendMailWithSender(
                                 $config->getSenderMail(),
                                 Website::getWebsiteName(),
                                 $thisResponse->getUser()->getMail(),
@@ -501,7 +502,7 @@ class SupportController extends AbstractController
                                 'Nouvelle réponse à la demande <b>' . $support->getQuestion() . "</b><br>Vous pouvez la consulter <a href='" . $support->getUrl() . "'>ici</a>."
                             );
                         } else {
-                            MailController::getInstance()->sendMail(
+                            MailManager::getInstance()->sendMail(
                                 $thisResponse->getUser()->getMail(),
                                 $config->getObjectMailResponse(),
                                 'Nouvelle réponse à la demande <b>' . $support->getQuestion() . "</b><br>Vous pouvez la consulter <a href='" . $support->getUrl() . "'>ici</a>."
