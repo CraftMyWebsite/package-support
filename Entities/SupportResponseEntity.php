@@ -2,12 +2,13 @@
 
 namespace CMW\Entity\Support;
 
-use CMW\Utils\Date;
 use CMW\Entity\Users\UserEntity;
 use CMW\Manager\Lang\LangManager;
+use CMW\Manager\Package\AbstractEntity;
 use CMW\Model\Support\SupportResponsesModel;
+use CMW\Utils\Date;
 
-class SupportResponseEntity
+class SupportResponseEntity extends AbstractEntity
 {
     private int $support_response_id;
     private SupportEntity $support_id;

@@ -2,13 +2,14 @@
 
 namespace CMW\Entity\Support;
 
-use CMW\Utils\Date;
 use CMW\Entity\Users\UserEntity;
 use CMW\Manager\Env\EnvManager;
 use CMW\Manager\Lang\LangManager;
+use CMW\Manager\Package\AbstractEntity;
+use CMW\Utils\Date;
 use CMW\Utils\Website;
 
-class SupportEntity
+class SupportEntity extends AbstractEntity
 {
     private int $support_id;
     private string $support_question;

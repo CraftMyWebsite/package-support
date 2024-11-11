@@ -2,9 +2,10 @@
 
 namespace CMW\Entity\Support;
 
+use CMW\Manager\Package\AbstractEntity;
 use CMW\Utils\Date;
 
-class SupportSettingEntity
+class SupportSettingEntity extends AbstractEntity
 {
     private ?string $support_settings_webhook_new_support;
     private bool $support_settings_use_webhook_new_support;
