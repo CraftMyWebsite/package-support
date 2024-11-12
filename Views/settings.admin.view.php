@@ -17,7 +17,7 @@ $description = LangManager::translate('support.description');
 </div>
 
 <form id="supportSettings" action="" method="post">
-    <?php (new SecurityManager())->insertHiddenToken() ?>
+    <?php SecurityManager::getInstance()->insertHiddenToken() ?>
 <div class="grid-3">
     <div class="card">
         <div>

@@ -25,7 +25,7 @@ Website::setDescription('Consultez les réponses de nos experts.');
 <h2 style="text-align: center">Support</h2>
 
 <form class="space-y-6" action="" method="post">
-    <?php (new SecurityManager())->insertHiddenToken() ?>
+    <?php SecurityManager::getInstance()->insertHiddenToken() ?>
     <div class="mb-2">
         <label for="support_question">Votre demande :</label>
         <textarea style="display: block; width: 100%" minlength="20" id="support_question" rows="4" name="support_question" placeholder="Impossible de ..."></textarea>

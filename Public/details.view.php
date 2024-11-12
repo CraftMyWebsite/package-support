@@ -59,7 +59,7 @@ Website::setDescription('Consultez les réponses de nos experts.');
 
 <?php if ($support->getStatus() !== '2'): ?>
     <form style="border: solid 1px #4b4a4a; border-radius: 5px; padding: 9px; margin-top: 10px" action="" method="post">
-        <?php (new SecurityManager())->insertHiddenToken() ?>
+        <?php SecurityManager::getInstance()->insertHiddenToken() ?>
 
         <label for="support_response_content" class="block mb-2 text-sm font-medium text-gray-900">Votre
             réponse :</label>

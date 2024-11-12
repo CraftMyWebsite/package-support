@@ -101,7 +101,7 @@ $description = LangManager::translate('support.description');
 <div class="card">
     <h6><?= LangManager::translate('support.details.reply') ?></h6>
     <form method="post">
-        <?php (new SecurityManager())->insertHiddenToken() ?>
+        <?php SecurityManager::getInstance()->insertHiddenToken() ?>
         <textarea id="support_response_content" name="support_response_content" class="textarea"></textarea>
         <div class="text-center mt-2">
             <button type="submit" class="btn btn-primary"><?= LangManager::translate('support.details.btnReply') ?></button>
