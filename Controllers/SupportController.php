@@ -2,8 +2,8 @@
 
 namespace CMW\Controller\Support;
 
-use CMW\Controller\Core\MailController;
 use CMW\Controller\Users\UsersController;
+use CMW\Controller\Users\UsersSessionsController;
 use CMW\Manager\Flash\Alert;
 use CMW\Manager\Flash\Flash;
 use CMW\Manager\Lang\LangManager;
@@ -16,7 +16,6 @@ use CMW\Model\Core\MailModel;
 use CMW\Model\Support\SupportModel;
 use CMW\Model\Support\SupportResponsesModel;
 use CMW\Model\Support\SupportSettingsModel;
-use CMW\Model\Users\UsersModel;
 use CMW\Utils\Redirect;
 use CMW\Utils\Utils;
 use CMW\Utils\Website;
@@ -87,7 +86,7 @@ class SupportController extends AbstractController
             Redirect::errorPage(404);
         }
 
-        $user = UsersModel::getCurrentUser();
+        $user = UsersSessionsController::getInstance()->getCurrentUser();
 
         if (!$user) {
             Redirect::redirectToHome();
@@ -258,7 +257,7 @@ class SupportController extends AbstractController
             Redirect::redirectPreviousRoute();
         }
 
-        $user = UsersModel::getCurrentUser();
+        $user = UsersSessionsController::getInstance()->getCurrentUser();
 
         if (!$user) {
             Redirect::redirectToHome();
@@ -355,7 +354,7 @@ class SupportController extends AbstractController
             Redirect::redirect('login');
         }
 
-        $user = UsersModel::getCurrentUser();
+        $user = UsersSessionsController::getInstance()->getCurrentUser();
 
         if (!$user) {
             Redirect::redirectToHome();
@@ -387,7 +386,7 @@ class SupportController extends AbstractController
                 );
                 Redirect::redirect('login');
             } else {
-                if ($support->getUser()->getId() !== UsersModel::getCurrentUser()?->getId()) {
+                if ($support->getUser()->getId() !== UsersSessionsController::getInstance()->getCurrentUser()?->getId()) {
                     Flash::send(
                         Alert::ERROR,
                         LangManager::translate('support.flash.title'),
@@ -447,7 +446,7 @@ class SupportController extends AbstractController
                     LangManager::translate('support.flash.subjectClosed'),
                 );
             } else {
-                $user = UsersModel::getCurrentUser();
+                $user = UsersSessionsController::getInstance()->getCurrentUser();
 
                 if (!$user) {
                     Redirect::redirectToHome();
@@ -540,7 +539,7 @@ class SupportController extends AbstractController
                 Redirect::errorPage(404);
             }
 
-            if (UsersController::isAdminLogged() || $support->getUser()->getId() === UsersModel::getCurrentUser()?->getId()) {
+            if (UsersController::isAdminLogged() || $support->getUser()->getId() === UsersSessionsController::getInstance()->getCurrentUser()?->getId()) {
                 SupportModel::getInstance()->setSupportStatus($support->getId(), 2);
                 Flash::send(
                     Alert::SUCCESS,
