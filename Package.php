@@ -47,11 +47,13 @@ class Package implements IPackageConfig
                         title: LangManager::translate('support.menu.manage'),
                         permission: 'support.show',
                         url: 'support/manage',
+                        subMenus: []
                     ),
                     new PackageSubMenuType(
                         title: LangManager::translate('support.menu.settings'),
                         permission: 'support.settings',
                         url: 'support/settings',
+                        subMenus: []
                     ),
                 ]
             ),
