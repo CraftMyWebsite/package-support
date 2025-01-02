@@ -12,14 +12,7 @@ Website::setTitle('Support');
 Website::setDescription('Consultez les réponses de nos experts.');
 ?>
 
-<?php if (\CMW\Controller\Users\UsersController::isAdminLogged()): ?>
-    <div style="background-color: orange; padding: 6px; margin-bottom: 10px">
-        <span>Votre thème ne gère pas cette page !</span>
-        <br>
-        <small>Seuls les administrateurs voient ce message !</small>
-    </div>
-<?php endif;?>
-
+<section style="width: 70%;padding-bottom: 6rem;margin: 1rem auto auto;">
 <a href="<?= Website::getProtocol() . '://' . $_SERVER['SERVER_NAME'] . EnvManager::getInstance()->getValue('PATH_SUBFOLDER') . 'support/private' ?>">Voir mes demandes</a>
 
 <h2 style="text-align: center">Support</h2>
@@ -59,3 +52,4 @@ Website::setDescription('Consultez les réponses de nos experts.');
     <?php endforeach; ?>
 </div>
 <?php endif; ?>
+</section>
